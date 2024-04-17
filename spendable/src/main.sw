@@ -5,7 +5,7 @@ use std::outputs::*;
 use std::constants::ZERO_B256;
 use std::math::*;
 use std::auth::*;
-use std::primitive_conversions::*;
+use std::primitive_conversions::u32::*;
 
 configurable {
     ASSET_ID: AssetId = AssetId::from(0x0000000000000000000000000000000000000000000000000000000000000000),
@@ -24,12 +24,18 @@ fn main() -> bool {
                     || Address::from(id) == predicate_address())
                 {
                     let amount = output_amount(i);
+                    if amount <= 9999 {
+                        i = i + 1;
+                        continue;
+                    };
                     let digits = amount.log(10) - 4;
-                    //let power = 10.pow(try_from(digits - 4));
+                    let power = 10.pow(<u32 as TryFrom<u64>>::try_from(digits - 4).unwrap());
+                    let rounded = (amount / power) * power;
+                    assert(amount == rounded);
                 }
             },
             _ => {},
-        }
+        };
         i = i + 1;
     };
     true
