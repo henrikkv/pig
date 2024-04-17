@@ -1,11 +1,14 @@
-[project]
-name = "NFT-contract"
-version = "0.0.0"
-authors = ["Fuel Labs <contact@fuel.sh>"]
+[package]
+name = "pig"
+description = "A cargo-generate template for Rust + Sway integration testing."
+version = "0.1.0"
 edition = "2021"
+authors = ["Henrik Kvamme <henrik@kvamme.xyz>"]
 license = "Apache-2.0"
 
-[dependencies]
+[dev-dependencies]
+fuels = { version = "0.56.0", features = ["fuel-core-lib"] }
+tokio = { version = "1.12", features = ["rt", "macros"] }
 
 [[test]]
 harness = true
